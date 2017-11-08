@@ -48,6 +48,8 @@ float mobility_loop_time_step = 0.1;
 float status_publish_interval = 5;
 float kill_switch_timeout = 10;
 
+float local_average_heading;
+
 pose current_location;
 
 int transitions_to_auto = 0;
@@ -176,9 +178,8 @@ void mobilityStateMachine(const ros::TimerEvent &)
             case STATE_MACHINE_TRANSLATE:
             {
                 state_machine_msg.data = "TRANSLATING";//, " + converter.str();
-                float angular_velocity = (local_average_heading - current_location.theta) * 0.8;
-                float linear_velocity = 0;
-
+                float angular_velocity = 0.2;
+                float linear_velocity = 0.1;
                 setVelocity(linear_velocity, angular_velocity);
                 break;
             }
@@ -426,7 +427,7 @@ void calculate_neighbors(string rover_name){
 float calculate_local_average_heading(){
     float u_x=0;
     float u_y=0;
-    float local_average_heading;
+    
     for (int i = 0; i<neighbors.size(); i++){
         u_x += cos(neighbors[i].theta);
         u_y += sin(neighbors[i].theta);
