@@ -381,6 +381,12 @@ void parse_pose_message(string msg){
         all_rovers[1] = incoming_pose;
     } else if (incoming_rover_name.compare("achilles") == 0){
         all_rovers[2] = incoming_pose;
+    } else if (incoming_rover_name.compare("diomedes") == 0){
+        all_rovers[3] = incoming_pose;
+    } else if (incoming_rover_name.compare("hector") == 0){
+        all_rovers[4] = incoming_pose;
+    } else if (incoming_rover_name.compare("paris") == 0){
+        all_rovers[2] = incoming_pose;
     } else {
         cout << "We missed something.";
     }
