@@ -178,8 +178,9 @@ void mobilityStateMachine(const ros::TimerEvent &)
             case STATE_MACHINE_TRANSLATE:
             {
                 state_machine_msg.data = "TRANSLATING";//, " + converter.str();
-                float angular_velocity = 0.2;
-                float linear_velocity = 0.1;
+                float angular_velocity = (local_average_heading - current_location.theta) * 0.8;
+ -              float linear_velocity = 0;
+
                 setVelocity(linear_velocity, angular_velocity);
                 break;
             }
