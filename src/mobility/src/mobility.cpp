@@ -387,7 +387,7 @@ void parse_pose_message(string msg){
     } else if (incoming_rover_name.compare("hector") == 0){
         all_rovers[4] = incoming_pose;
     } else if (incoming_rover_name.compare("paris") == 0){
-        all_rovers[2] = incoming_pose;
+        all_rovers[5] = incoming_pose;
     } else {
         cout << "We missed something.";
     }
