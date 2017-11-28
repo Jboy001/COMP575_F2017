@@ -83,8 +83,9 @@ ros::Subscriber targetSubscriber;
 ros::Subscriber obstacleSubscriber;
 ros::Subscriber odometrySubscriber;
 
+
 ros::Subscriber messageSubscriber;
-ros::Subscriber poseSubsriber;
+ros::Subscriber poseSubscriber;
 
 //Timers
 ros::Timer stateMachineTimer;
@@ -149,6 +150,7 @@ int main(int argc, char **argv)
     odometrySubscriber = mNH.subscribe((rover_name + "/odom/ekf"), 10, odometryHandler);
 
     messageSubscriber = mNH.subscribe(("messages"), 10, messageHandler);
+    poseSubscriber = mNH.subscribe(("poses"), 10, poseHandler);
 
     status_publisher = mNH.advertise<std_msgs::String>((rover_name + "/status"), 1, true);
     velocityPublish = mNH.advertise<geometry_msgs::Twist>((rover_name + "/velocity"), 10);
@@ -303,11 +305,11 @@ void poseHandler(const std_msgs::String::ConstPtr &message)
     float local_position;
 
     neighbors.clear();
-    for (int i = 0; i<6; i++){
+    for (i = 0; i<6; i++){
         if(i != my_index)
             if(hypot(my_pose.x-all_rovers[i].x, my_pose.y-all_rovers[i].y)<2){
-                x_diff += my_pose.x-all_rovers[i].x - current_location.x;
-                y_diff += my_pose.x-all_rovers[i].y - current_location.y;
+                x_diff += all_rovers[i].x - current_location.x;
+                y_diff += all_rovers[i].y - current_location.y;
                 neighbors.push_back(all_rovers[i]);
             }
         }
