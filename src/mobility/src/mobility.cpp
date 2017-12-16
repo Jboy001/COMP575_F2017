@@ -519,6 +519,17 @@ float calculate_global_average_heading(){
 }
 
 
+float calculate_local_average_heading(){
+    float l_x=0;
+    float l_y=0;
+    for (int i = 0; i<6; i++){
+        g_x += cos(neighbors[i].theta);
+        g_y += sin(neighbors[i].theta);
+    }
+    local_average_heading = atan2(g_y,g_x);
+    return local_average_heading;
+ }
+
 void calculate_neighbors(string rover_name){
     pose my_pose;
     int my_index;
@@ -554,16 +565,6 @@ void calculate_neighbors(string rover_name){
 }
 
 
-float calculate_local_average_heading(){
-    float l_x=0;
-    float l_y=0;
-    for (int i = 0; i<6; i++){
-        l_x += cos(neighbors[i].theta);
-        l_y += sin(neighbors[i].theta);
-    }
-    local_average_heading = atan2(l_y,l_x);
-    return local_average_heading;
- }
 
 
 void calculate_position_averaging_heading(){
@@ -663,8 +664,6 @@ processor stf(processor w,int max2)
      w.count+=1;
      return w;
  }
-
-
 
 
  int msg(processor w, int i )
